@@ -52,12 +52,20 @@ namespace Zongsoft.Security.Membership
 		User GetUser(string identity, string @namespace);
 
 		/// <summary>
-		/// 设置指定编号的用户主体标识。
+		/// 确定指定的用户标识在指定的命名空间内是否已经存在。
+		/// </summary>
+		/// <param name="identity">要确定的用户标识，可以是“用户名”或“邮箱地址”或“手机号码”。</param>
+		/// <param name="namespace">要确定的用户标识所属的命名空间。</param>
+		/// <returns>如果指定的用户标识在命名空间内已经存在则返回真(true)，否则返回假(false)。</returns>
+		bool Exists(string identity, string @namespace);
+
+		/// <summary>
+		/// 设置指定编号的用户所对应的主体标识。
 		/// </summary>
 		/// <param name="userId">要设置的用户编号。</param>
-		/// <param name="principal">要设置的用户主体标识。</param>
+		/// <param name="principalId">要设置的用户主体标识。</param>
 		/// <returns>如果设置成功则返回真(True)，否则返回假(False)。</returns>
-		bool SetPrincipal(int userId, string principal);
+		bool SetPrincipalId(int userId, string principalId);
 
 		/// <summary>
 		/// 获取当前命名空间中的所有用户。
@@ -75,11 +83,12 @@ namespace Zongsoft.Security.Membership
 		int DeleteUsers(params int[] userIds);
 
 		/// <summary>
-		/// 创建单个或者多个用户。
+		/// 创建一个用户，并为其设置密码。
 		/// </summary>
-		/// <param name="users">要创建的用户对象数组。</param>
-		/// <returns>返回创建成功的用户数量。</returns>
-		int CreateUsers(params User[] users);
+		/// <param name="user">要创建的<seealso cref="User"/>用户对象。</param>
+		/// <param name="password">为新创建用户的设置的密码。</param>
+		/// <returns>如果创建成功则返回真(true)，否则返回假(false)。</returns>
+		bool CreateUser(User user, string password);
 
 		/// <summary>
 		/// 创建单个或者多个用户。
@@ -173,7 +182,8 @@ namespace Zongsoft.Security.Membership
 		/// <param name="password">当前用户的密码，如果密码错误则无法更新密码问答。</param>
 		/// <param name="passwordQuestions">当前用户的密码问答的题面集。</param>
 		/// <param name="passwordAnswers">当前用户的密码问答的答案集。</param>
-		void SetPasswordQuestionsAndAnswers(int userId, string password, string[] passwordQuestions, string[] passwordAnswers);
+		/// <returns>如果设置成则返回真(True)，否则返回假(False)。</returns>
+		bool SetPasswordQuestionsAndAnswers(int userId, string password, string[] passwordQuestions, string[] passwordAnswers);
 		#endregion
 	}
 }

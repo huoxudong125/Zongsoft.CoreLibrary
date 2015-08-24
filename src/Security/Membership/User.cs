@@ -47,7 +47,9 @@ namespace Zongsoft.Security.Membership
 		private string _fullName;
 		private string _description;
 		private string _namespace;
-		private string _principal;
+		private string _avatar;
+		private object _principal;
+		private string _principalId;
 		private string _email;
 		private string _phoneNumber;
 		private bool _approved;
@@ -63,6 +65,10 @@ namespace Zongsoft.Security.Membership
 		#endregion
 
 		#region 构造函数
+		protected User()
+		{
+		}
+
 		public User(int userId, string name) : this(userId, name, null)
 		{
 		}
@@ -76,6 +82,8 @@ namespace Zongsoft.Security.Membership
 			_name = name.Trim();
 			_namespace = @namespace;
 			_createdTime = DateTime.Now;
+			_approved = true;
+			_approvedTime = _createdTime;
 		}
 		#endregion
 
@@ -159,9 +167,24 @@ namespace Zongsoft.Security.Membership
 		}
 
 		/// <summary>
-		/// 获取或设置用户对应的主体标识。
+		/// 获取或设置用户的头像标志(头像代码或头像图片的URL)。
 		/// </summary>
-		public string Principal
+		public string Avatar
+		{
+			get
+			{
+				return _avatar;
+			}
+			set
+			{
+				this.SetPropertyValue(() => this.Avatar, ref _avatar, value);
+			}
+		}
+
+		/// <summary>
+		/// 获取或设置用户对应的主体对象。
+		/// </summary>
+		public object Principal
 		{
 			get
 			{
@@ -170,6 +193,21 @@ namespace Zongsoft.Security.Membership
 			set
 			{
 				this.SetPropertyValue(() => this.Principal, ref _principal, value);
+			}
+		}
+
+		/// <summary>
+		/// 获取或设置用户对应的主体标识。
+		/// </summary>
+		public string PrincipalId
+		{
+			get
+			{
+				return _principalId;
+			}
+			set
+			{
+				this.SetPropertyValue(() => this.PrincipalId, ref _principalId, value);
 			}
 		}
 
